@@ -22,56 +22,91 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: #f5f5f5;
-            padding: 16px;
             margin: 0;
-            min-height: 100vh;
+            height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        /* Barre de navigation */
+        .navbar {
             display: flex;
-            flex-direction: column;
+            background: white;
+            border-bottom: 2px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 50px;
+            flex-shrink: 0;
+        }
+
+        .nav-tab {
             flex: 1;
-        }
-
-        h1 {
-            margin-bottom: 8px;
-            color: #333;
-            font-size: 24px;
-            word-break: break-word;
-        }
-
-        .subtitle {
+            padding: 0 20px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
             color: #666;
-            margin-bottom: 24px;
-            font-size: 14px;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tab:hover {
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        .nav-tab.active {
+            color: #2196F3;
+            border-bottom-color: #2196F3;
+        }
+
+        /* Conteneur principal */
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sections des plays */
+        .play-section {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            padding: 16px;
+            background: #f5f5f5;
+            overflow-y: auto;
+        }
+
+        .play-section.active {
+            display: flex;
+        }
+
+        .section-title {
+            margin-bottom: 12px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
         }
 
         .embed-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
             width: 100%;
-            overflow: hidden;
             flex: 1;
-            min-height: 300px;
+            overflow: hidden;
+            margin-bottom: 12px;
         }
 
         .embed-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             height: 100%;
             overflow: hidden;
-            border-radius: 4px;
-            background: #f9f9f9;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .embed-container iframe {
@@ -81,71 +116,118 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         /* Tablettes - écrans moyens (768px et plus) */
         @media (min-width: 768px) {
-            body {
+            .navbar {
+                height: 60px;
+            }
+            .nav-tab {
+                padding: 0 30px;
+                font-size: 18px;
+            }
+            .play-section {
                 padding: 20px;
             }
-            .container {
-                padding: 30px;
-            }
-            h1 {
-                font-size: 28px;
+            .embed-wrapper {
+                margin-bottom: 16px;
             }
         }
 
         /* Grands écrans (1024px et plus) */
         @media (min-width: 1024px) {
-            body {
+            .navbar {
+                height: 70px;
+            }
+            .nav-tab {
+                padding: 0 40px;
+                font-size: 20px;
+            }
+            .play-section {
                 padding: 24px;
             }
-            .container {
-                padding: 40px;
+            .section-title {
+                font-size: 24px;
             }
         }
 
         /* Très petits écrans (moins de 480px) */
         @media (max-width: 479px) {
-            body {
+            .navbar {
+                height: 48px;
+            }
+            .nav-tab {
+                padding: 0 12px;
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .play-section {
                 padding: 8px;
             }
-            .container {
-                padding: 12px;
-                border-radius: 6px;
-                gap: 12px;
-            }
-            h1 {
-                font-size: 18px;
-                margin-bottom: 4px;
-            }
-            .subtitle {
-                font-size: 12px;
-                margin-bottom: 12px;
+            .section-title {
+                font-size: 14px;
+                margin-bottom: 8px;
             }
             .embed-wrapper {
-                margin: 0;
-                min-height: 400px;
+                margin-bottom: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Play Creator</h1>
-        <p class="subtitle">Basketball Play Design Tool</p>
+    <!-- Barre de navigation -->
+    <div class="navbar">
+        <button class="nav-tab active" data-tab="tete">Tête</button>
+        <button class="nav-tab" data-tab="5">5</button>
+    </div>
 
-        <div class="embed-wrapper">
-            <div class="embed-container">
-                <iframe
-                    allow="fullscreen"
-                    title="Play Creator App"
-                    src="https://www.thehoopsgeek.com/react-apps/PlayCreator/embed/?code=VpHDbkjO1U&showTitle=1&showVideo=1&showDescription=1&showPhaseDescriptions=1">
-                </iframe>
+    <!-- Contenu principal -->
+    <div class="content-wrapper">
+        <!-- Play Tête -->
+        <div class="play-section active" id="play-tete">
+            <div class="section-title">Tête - Play Creator</div>
+            <div class="embed-wrapper">
+                <div class="embed-container">
+                    <iframe
+                        allow="fullscreen"
+                        title="Play Tête"
+                        src="https://www.thehoopsgeek.com/react-apps/PlayCreator/embed/?code=VpHDbkjO1U&showTitle=1&showVideo=1&showDescription=1&showPhaseDescriptions=1">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Play 5 -->
+        <div class="play-section" id="play-5">
+            <div class="section-title">5 - Play Creator</div>
+            <div class="embed-wrapper">
+                <div class="embed-container">
+                    <iframe allow="fullscreen" style="border:0" title="Play Creator App" width="800" height="500" src='https://www.thehoopsgeek.com/react-apps/PlayCreator/embed/?code=GlmZlYodyh&showTitle=1&showVideo=1&showDescription=1&showPhaseDescriptions=1'></iframe>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Gestion des onglets
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const playSections = document.querySelectorAll('.play-section');
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.getAttribute('data-tab');
+
+                // Désactiver tous les onglets et sections
+                navTabs.forEach(t => t.classList.remove('active'));
+                playSections.forEach(section => section.classList.remove('active'));
+
+                // Activer l'onglet et la section sélectionnés
+                tab.classList.add('active');
+                document.getElementById(`play-${tabName}`).classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
